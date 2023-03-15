@@ -1,5 +1,5 @@
-import { Button, Card, Form, Input, Space } from "antd";
-import styles from "../TodoForm/todoForm.module.css";
+import { Button, Card, Form, Input } from "antd";
+import styles from "../TodoItem/todoItem.module.css";
 import { Item } from "../TodoForm/TodoForm";
 import { useState } from "react";
 
@@ -29,21 +29,42 @@ export default function TodoItem({
   };
 
   return (
-    <Form onFinish={onFinish}>
-      <Card key={item.description} className={styles.card} size="small">
+    <Form className={styles.form} onFinish={onFinish}>
+      <Card
+        bodyStyle={{
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+        key={item.description}
+        size="small"
+        style={{ width: 300 }}
+      >
         {isEdit ? (
-          <>
-            <Form.Item name="editItem">
+          <div className={styles.editContainer}>
+            <Form.Item className={styles.input} name="editItem">
               <Input defaultValue={item.description} />
             </Form.Item>
-            <Button htmlType="submit">Save</Button>
-          </>
+            <Button type="primary" className={styles.button} htmlType="submit">
+              Save
+            </Button>
+          </div>
         ) : (
           <p className={styles.title}>Title: {item.description}</p>
         )}
         <p className={styles.date}> Date: {item.date}</p>
-        <Button onClick={() => onClickDelete(item)}>Delete</Button>
-        <Button onClick={() => onClickEdit()}>Edit</Button>
+        <div className={styles.buttons}>
+          <Button
+            className={styles.button}
+            type="primary"
+            onClick={() => onClickDelete(item)}
+          >
+            Delete
+          </Button>
+          <Button type="primary" onClick={() => onClickEdit()}>
+            Edit
+          </Button>
+        </div>
       </Card>
     </Form>
   );
