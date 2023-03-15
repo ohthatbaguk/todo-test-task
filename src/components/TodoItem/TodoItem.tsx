@@ -21,21 +21,23 @@ export default function TodoItem({
   };
 
   const onFinish = ({ editItem }: any) => {
-    updateTodo(item, editItem);
+    if (!editItem) {
+      setIsEdit(false);
+    } else {
+      updateTodo(item, editItem);
+    }
   };
 
   return (
     <Form onFinish={onFinish}>
       <Card key={item.description} className={styles.card} size="small">
         {isEdit ? (
-          <Form.Item name="editItem">
-            <Space>
+          <>
+            <Form.Item name="editItem">
               <Input defaultValue={item.description} />
-              <Button type="primary" htmlType="submit">
-                Save
-              </Button>
-            </Space>
-          </Form.Item>
+            </Form.Item>
+            <Button htmlType="submit">Save</Button>
+          </>
         ) : (
           <p className={styles.title}>Title: {item.description}</p>
         )}

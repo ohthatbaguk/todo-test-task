@@ -39,14 +39,17 @@ export default function TodoForm() {
 
   const updateTodo = (item: Item, editedDescription: string) => {
     setItems((items) => {
+      console.log("edited", editedDescription);
       const newItems = [...items];
       const editItemIndex = newItems.findIndex(
         (todo) => todo.description === item.description
       );
-      newItems.splice(editItemIndex, editItemIndex, {
+      newItems.splice(editItemIndex, 1, {
         description: editedDescription,
         date: newItems[editItemIndex].date,
       });
+
+      console.log("newItems", newItems);
       return newItems;
     });
   };
