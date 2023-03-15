@@ -1,17 +1,27 @@
-import { Button, Form, Input, Typography } from "antd";
+import { Button, Card, Form, Input, Typography } from "antd";
 import styles from "./todoForm.module.css";
-import { useState } from "react";
-import { getFullDate } from "../tools/dates";
+import { useEffect, useState } from "react";
+import { getFullDate } from "../../tools/dates";
+import {
+  getFromLocalStorage,
+  saveToLocalStorage,
+} from "../../tools/localStorage";
 const { Title } = Typography;
 
-interface TodoItem {
+export interface TodoItem {
   description: string;
   date: string;
 }
 
 export default function TodoForm() {
   const [form] = Form.useForm();
-  const [items, setItems] = useState<TodoItem[]>([]);
+  const [items, setItems] = useState<TodoItem[]>(
+    getFromLocalStorage("todos", [])
+  );
+
+  useEffect(() => {
+    saveToLocalStorage("todos", items);
+  }, [items]);
 
   const onFinish = ({ todosItem }: any) => {
     setItems((items) => [
@@ -19,7 +29,6 @@ export default function TodoForm() {
       ...items,
     ]);
 
-    console.log(items);
     form.resetFields();
   };
 
@@ -34,8 +43,14 @@ export default function TodoForm() {
           Add
         </Button>
       </Form.Item>
-      {items.map((item) => (
-        <Form.Item key={item.description}>{item.description}</Form.Item>
+      {items?.map((item) => (
+        <Form.Item key={item.description}>
+          <Card className={styles.card} size="small" title={item.description}>
+            <p className={styles.date}> Date: {item.date}</p>
+            <Button>Delete</Button>
+            <Button>Edit</Button>
+          </Card>
+        </Form.Item>
       ))}
     </Form>
   );
