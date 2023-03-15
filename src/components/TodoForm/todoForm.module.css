@@ -15,6 +15,8 @@
     margin: 0;
 }
 
-.card {
-
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 3px;
 }

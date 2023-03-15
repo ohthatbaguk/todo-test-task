@@ -1,6 +1,6 @@
-import { TodoItem } from "../components/TodoForm/TodoForm";
+import { Item } from "../components/TodoForm/TodoForm";
 
-function saveToLocalStorage(key: string, value: TodoItem[]) {
+function saveToLocalStorage(key: string, value: Item[]) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch (error) {
